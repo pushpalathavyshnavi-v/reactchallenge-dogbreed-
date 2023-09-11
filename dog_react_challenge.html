@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dogs_breed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="dogs.css">
+    <link rel="html" href="types &img.html">
+    
+</head>
+<body> 
+   <span id="sp1"> Dog Breeds  </span> <a href="" title="favs"> &hearts; </a>
+    <br> <br> 
+    <div class="wrapper">
+        <div class="search-input">
+            <a href="" target="_blank" hidden></a>
+               <input type="text" placeholder="Type to search..">
+                <button class="icon"><i class="fa fa-search"></i></button>
+               <div class="autocom-box">
+               </div>
+        </div>
+    </div> 
+
+     <script>
+        let suggestions =
+        [ "akita","appenzeller","australian","chow","waterdog","sussex spaniel","japanese spaniel","blenheim spaniel","shiba","pug","medium poodle","pomeranian","maltese","malamute","labradoodle","husky","hound","clumber","beagle","brabancon"
+          ] ;
+
+        const searchWrapper = document.querySelector(".search-input");
+const inputBox = searchWrapper.querySelector("input");
+const suggBox = searchWrapper.querySelector(".autocom-box");
+const icon = searchWrapper.querySelector(".icon");
+let linkTag = searchWrapper.querySelector("a");
+let webLink;
+// if user press any key and release
+inputBox.onkeyup = (e) => {
+  let userData = e.target.value; //user enetered data
+  let emptyArray = [];
+  if (userData) {
+    icon.onclick = () => {
+      webLink = window.location.href = 'types &img.html';
+        
+      linkTag.setAttribute("href", webLink);
+      console.log(webLink);
+      linkTag.click();
+    };
+    emptyArray = suggestions.filter((data) => {
+      //filtering array value and user characters to lowercase and return only those words which are start with user enetered chars
+      return data.toLocaleLowerCase().startsWith(userData.toLocaleLowerCase());
+    });
+    emptyArray = emptyArray.map((data) => {
+      // passing return data inside li tag
+      return (data = "<li>" + data + "</li>");
+    });
+    searchWrapper.classList.add("active"); //show autocomplete box
+    showSuggestions(emptyArray);
+    let allList = suggBox.querySelectorAll("li");
+    for (let i = 0; i < allList.length; i++) {
+      //adding onclick attribute in all li tag
+      allList[i].setAttribute("onclick", "select(this)");
+    }
+  } else {
+    searchWrapper.classList.remove("active"); //hide autocomplete box
+  }
+};
+function select(element, event) {
+  let selectData = element.textContent;
+  inputBox.value = selectData;
+  icon.onclick = () => {
+    webLink = window.location.href = 'types &img.html';
+    linkTag.setAttribute("href", webLink);
+    linkTag.click();
+  };
+  searchWrapper.classList.remove("active");
+}
+function showSuggestions(list) {
+  let listData;
+  if (!list.length) {
+    userValue = inputBox.value;
+    listData = "<li>" + userValue + "</li>";
+  } else {
+    listData = list.join("");
+  }
+  suggBox.innerHTML = listData;
+}
+
+     </script>
+</body>
+</html>
